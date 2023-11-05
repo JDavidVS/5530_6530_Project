@@ -1,0 +1,500 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Project - Frequency Response of FIR Filters</title><meta name="generator" content="MATLAB 9.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-11-04"><meta name="DC.source" content="proj_VENEGAS.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Project - Frequency Response of FIR Filters</h1><!--introduction--><pre>David Venegas
+u0934702
+ECE 6530: Digital Signal Processing
+University of Utah</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">P-12: Frequency Response: Bandpass &amp; Nulling Filters</a></li><li><a href="#2">3.1 Nulling Filters for Rejection</a></li><li><a href="#3">(a).</a></li><li><a href="#4">(b)</a></li><li><a href="#5">(c)</a></li><li><a href="#6">(d)</a></li><li><a href="#7">(e)</a></li><li><a href="#8">(f)</a></li><li><a href="#9">FRREQUNECY ANALYSIS FOR PROJECT PRESENTATION</a></li><li><a href="#10">Matlab Functions</a></li></ul></div><h2 id="1">P-12: Frequency Response: Bandpass &amp; Nulling Filters</h2><pre class="codeinput"><span class="comment">% The goal of this lab is to study the response of FIR filters to inputs such</span>
+<span class="comment">% as complex exponentials and sinusoids. In the experiments of this lab, you</span>
+<span class="comment">% will use firfilt(), or conv(), to implement filters and freqz() to obtain</span>
+<span class="comment">% the filter's frequency response. As a result, you should learn how to</span>
+<span class="comment">% characterize a filter by knowing how it reacts to different frequency</span>
+<span class="comment">% components in the input. This lab also introduces two practical filters:</span>
+<span class="comment">% bandpass filters and nulling filters. Bandpass filters can be used to detect</span>
+<span class="comment">% and extract information from sinusoidal signals, e.g., tones in a touch-tone</span>
+<span class="comment">% telephone dialer. Nulling filters can be used to remove sinusoidal interference,</span>
+<span class="comment">% e.g., jamming signals in a radar.</span>
+</pre><h2 id="2">3.1 Nulling Filters for Rejection</h2><pre class="codeinput">clc;clear;
+</pre><h2 id="3">(a).</h2><pre class="codeinput"><span class="comment">% Design a filtering system that consists of the cascade of two FIR nulling</span>
+<span class="comment">% filters that will eliminate the following input frequencies: &#969; = 0.44&#960;, and &#969; = 0.7&#960;.</span>
+<span class="comment">% For this part, derive the filter coefficients of both nulling filters.</span>
+
+
+    <span class="comment">% Basic FIR Nulling Filter: y[n] = x[n] - 2cos(&#969;)x[n-1] + x[n-2]</span>
+
+    <span class="comment">% Coefficients of [FIR 1] for &#969; = 0.44&#960;:</span>
+    FIR1_b = [1 -2*cos(0.44*pi) 1];
+
+    <span class="comment">% Coefficients of [FIR 1] for &#969; = 0.7&#960;:</span>
+    FIR2_b = [1 -2*cos(0.7*pi) 1];
+</pre><h2 id="4">(b)</h2><pre class="codeinput"><span class="comment">% Generate an input signal x[n] that is the sum of three sinusoids:</span>
+<span class="comment">% x[n] = 5cos(0.3&#960;n) + 22cos(0.44&#960;n - &#960;/3) + 22cos(0.7&#960;n - &#960;/4)</span>
+
+    <span class="comment">% Make the input signal 150 samples long over the range 0 &#8804; n &#8804; 149.</span>
+    n = 0:149;
+    x = 5*cos(0.3*pi*n) + 22*cos((0.44*pi*n) - (pi/3)) + 22*cos((0.7*pi*n) - (pi/4));
+</pre><h2 id="5">(c)</h2><pre class="codeinput"><span class="comment">% Filter the sum of three sinusoids signal x[n] through the filters designed</span>
+<span class="comment">% in part (a). Show the MATLAB code that you wrote to implement the cascade</span>
+<span class="comment">% of two FIR filters.</span>
+
+    <span class="comment">% Cascaded FIR Filter = [FIR 1] * [FIR 1]</span>
+    FIR_null = conv(FIR1_b, FIR2_b);
+
+    <span class="comment">% System Response</span>
+    y = conv(x,FIR_null,<span class="string">'same'</span>);
+</pre><h2 id="6">(d)</h2><pre class="codeinput"><span class="comment">% Make a plot of the output signal&#8212;show the first 40 points. Determine</span>
+<span class="comment">% (by hand) the exact mathematical formula (magnitude, phase and frequency)</span>
+<span class="comment">% for the output signal for n &#8805; 5.</span>
+
+    <span class="comment">% Plot of the filtered signal</span>
+    figure(1)
+    stem(y);
+    xlim([0 40]);
+    xlabel(<span class="string">'n'</span>);
+    title(<span class="string">'Filtered Response Signal y[n]'</span>);
+    grid <span class="string">on</span>;
+
+    <span class="comment">% Filter response at H(0), H(0.3&#960;), H(0.44&#960;), H(0.7&#960;)</span>
+    w = [0 0.3*pi, 0.44*pi, 0.7*pi];
+    H1 = 1 - (2*cos(0.44*pi))*exp(-1j*w) + exp(-1j*w*2);
+    H2 = 1 - (2*cos(0.7*pi))*exp(-1j*w) + exp(-1j*w*2);
+    H = H1 .* H2;
+
+    H_mag = abs(H);
+    H_rad = angle(H);
+
+     <span class="comment">% Exact Mathematical Formula</span>
+    y_exact = 5*cos((0.3*pi*n) - 1.8850)*(1.8828);
+</pre><img vspace="5" hspace="5" src="proj_VENEGAS_01.png" alt=""> <h2 id="7">(e)</h2><pre class="codeinput"><span class="comment">% Plot the mathematical formula determined in (d) with MATLAB to show that</span>
+<span class="comment">% it matches the filter output over the range  &#8804; n &#8804; 40.</span>
+
+    figure(2)
+    hold <span class="string">on</span>
+    stem(y);
+    plot(n-1,y_exact);
+    xlim([0 40]);
+    legend(<span class="string">'Filtered Signal y[n]'</span>,<span class="string">'Exact Signal y[n]'</span>);
+    xlabel(<span class="string">'n'</span>);
+    title(<span class="string">'Response Signal y[n]'</span>);
+    grid <span class="string">on</span>;
+    hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="proj_VENEGAS_02.png" alt=""> <h2 id="8">(f)</h2><pre class="codeinput"><span class="comment">% Explain why the output signal is different for the first few points.</span>
+<span class="comment">% How many "start-up&#8221; points are found, and how is this number related to the</span>
+<span class="comment">% lengths of the filters designed in part (a)? Hint: consider the length of a</span>
+<span class="comment">% single FIR filter that is equivalent to the cascade of two length-3 FIRs</span>
+
+fprintf([<span class="string">'There is a high response on the first two (2) points of y[n] \n'</span> <span class="keyword">...</span>
+         <span class="string">'which are related to the number of coefficients in the FIR Nulling \n'</span><span class="keyword">...</span>
+         <span class="string">'filter, this is due to the cascade realization of the L = 3 FIR filters: \n'</span><span class="keyword">...</span>
+         <span class="string">'When two discrete systems are cascaded, we must do a convolution of the \n'</span><span class="keyword">...</span>
+         <span class="string">'systems involved h = h1 * h2 with a resulting FIR filter with a number of \n'</span><span class="keyword">...</span>
+         <span class="string">'coefficients L1 + L2 - 1 = 5.'</span>]);
+</pre><pre class="codeoutput">There is a high response on the first two (2) points of y[n] 
+which are related to the number of coefficients in the FIR Nulling 
+filter, this is due to the cascade realization of the L = 3 FIR filters: 
+When two discrete systems are cascaded, we must do a convolution of the 
+systems involved h = h1 * h2 with a resulting FIR filter with a number of 
+coefficients L1 + L2 - 1 = 5.</pre><h2 id="9">FRREQUNECY ANALYSIS FOR PROJECT PRESENTATION</h2><pre class="codeinput"><span class="comment">% Basic FIR Nulling Filter: y[n] = x[n] - 2cos(&#969;)x[n-1] + x[n-2]</span>
+    k = 0:149;
+    N = 100;
+    w = (2*pi*k)/N;
+
+    <span class="comment">% To block &#969; = 0.44&#960;:</span>
+    H1 = 1 - (2*cos(0.44*pi))*exp(-1j*w) + exp(-1j*w*2);
+
+    <span class="comment">% To block &#969; = 0.7&#960;:</span>
+    H2 = 1 - (2*cos(0.7*pi))*exp(-1j*w) + exp(-1j*w*2);
+
+    <span class="comment">% Cascaded FIR Filter</span>
+    H = H1.*H2;
+
+    <span class="comment">% Generate an input signal x[n] that is the sum of three sinusoids:</span>
+    <span class="comment">% x[n] = 5cos(0.3&#960;n) + 22cos(0.44&#960;n - &#960;/3) + 22cos(0.7&#960;n - &#960;/4)</span>
+    n = 0:149;
+    x = 5*cos(0.3*pi*n) + 22*cos((0.44*pi*n) - (pi/3)) + 22*cos((0.7*pi*n) - (pi/4));
+    N = 100;
+
+    <span class="comment">% Furier Series Coefficients {ck}</span>
+    ck = dfs(x, N);
+
+    <span class="comment">% Complex exponential signal yk[n]</span>
+    yk = ck .* H;
+
+    <span class="comment">% System Response y[n]</span>
+    y = idfs(yk, N);
+    <span class="comment">%Plots</span>
+
+    figure(1)
+    subplot(3,1,1)
+    plot(w,abs(ck));
+    title(<span class="string">'|x_{k}(&#969;)|'</span>);
+    xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
+    xticklabels({<span class="string">'0'</span>,<span class="string">'0.3\pi'</span>,<span class="string">'0.44\pi'</span>,<span class="string">'0.7\pi'</span>,<span class="string">'\pi'</span>,<span class="string">'0.7\pi'</span>,<span class="string">'0.44\pi'</span>,<span class="string">'0.3\pi'</span>,<span class="string">'2\pi'</span>});
+    xlim([0 2*pi]);
+    grid <span class="string">on</span>;
+
+    subplot(3,1,2)
+    plot(w,abs(H));
+    title(<span class="string">'|H(&#969;)|'</span>);
+    xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
+    xticklabels({<span class="string">'0'</span>,<span class="string">'0.3\pi'</span>,<span class="string">'0.44\pi'</span>,<span class="string">'0.7\pi'</span>,<span class="string">'\pi'</span>,<span class="string">'0.7\pi'</span>,<span class="string">'0.44\pi'</span>,<span class="string">'0.3\pi'</span>,<span class="string">'2\pi'</span>});
+    xlim([0 2*pi]);
+    grid <span class="string">on</span>;
+
+    subplot(3,1,3)
+    plot(w,abs(yk));
+    title(<span class="string">'|y_{k}(&#969;)|'</span>);
+    xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
+    xticklabels({<span class="string">'0'</span>,<span class="string">'0.3\pi'</span>,<span class="string">'0.44\pi'</span>,<span class="string">'0.7\pi'</span>,<span class="string">'\pi'</span>,<span class="string">'0.7\pi'</span>,<span class="string">'0.44\pi'</span>,<span class="string">'0.3\pi'</span>,<span class="string">'2\pi'</span>});
+    xlim([0 2*pi]);
+    xlabel(<span class="string">'&#969; = 2\pik/N'</span>);
+    grid <span class="string">on</span>;
+</pre><img vspace="5" hspace="5" src="proj_VENEGAS_03.png" alt=""> <h2 id="10">Matlab Functions</h2><pre class="codeinput"><span class="keyword">function</span> matlab_bug()
+    <span class="comment">% (IGNORE)</span>
+    <span class="comment">% This is a dummy function that fixes Matlab bug #496201</span>
+    <span class="comment">% where outputs are being printed in the end of the publishing html</span>
+    <span class="comment">% instead of their respective sections.</span>
+    workaround()
+    <span class="comment">%%The answer to everything is...</span>
+    my_subfunction();
+    <span class="comment">% (IGNORE)</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> DFS = dfs(x, N)
+
+    <span class="comment">% Compute the Discrete Fourier Series (DFS) coefficients of a periodic 1-D</span>
+    <span class="comment">% signal, where x is one period of the signal and N is the fundamental period.</span>
+
+    <span class="comment">% Find vector x(n) number of elements</span>
+    x_length = numel(x);
+    <span class="comment">% Generate discrete n-numbers based on x(n)</span>
+    n = 0:x_length-1;
+    <span class="comment">% Preallocate array ck</span>
+    ck = zeros(size(x));
+
+    <span class="keyword">for</span> k = 0:x_length-1
+
+        ck(k+1) = (1/N) * sum(x(n+1) .* exp((-1j*2*pi*k*n)/N));
+
+    <span class="keyword">end</span>
+
+    DFS = conj(ck);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> IDFS = idfs(ck, N)
+
+    <span class="comment">% Compute the Inverse Discrete Fourier Series (IDFS), where X is the</span>
+    <span class="comment">% DFS coefficient array and N is the fundamental period.</span>
+
+    <span class="comment">% Find vector c(k) number of elements</span>
+    ck_length = length(ck);
+    <span class="comment">% Generate discrete k-numbers based on c(k)</span>
+    k = 0:ck_length-1;
+    <span class="comment">% Preallocate array ck</span>
+    x = zeros(size(ck));
+
+    <span class="keyword">for</span> n = 0:ck_length-1
+
+        x(n+1) = sum(ck(k+1) .* exp((1j.*2.*pi.*k.*n)./N));
+
+    <span class="keyword">end</span>
+
+    IDFS = conj(x);
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Project - Frequency Response of FIR Filters
+%  David Venegas
+%  u0934702
+%  ECE 6530: Digital Signal Processing
+%  University of Utah
+%% P-12: Frequency Response: Bandpass & Nulling Filters 
+
+% The goal of this lab is to study the response of FIR filters to inputs such 
+% as complex exponentials and sinusoids. In the experiments of this lab, you 
+% will use firfilt(), or conv(), to implement filters and freqz() to obtain 
+% the filter's frequency response. As a result, you should learn how to 
+% characterize a filter by knowing how it reacts to different frequency 
+% components in the input. This lab also introduces two practical filters: 
+% bandpass filters and nulling filters. Bandpass filters can be used to detect 
+% and extract information from sinusoidal signals, e.g., tones in a touch-tone 
+% telephone dialer. Nulling filters can be used to remove sinusoidal interference, 
+% e.g., jamming signals in a radar. 
+
+%% 3.1 Nulling Filters for Rejection
+clc;clear;
+%% (a).
+
+% Design a filtering system that consists of the cascade of two FIR nulling 
+% filters that will eliminate the following input frequencies: ω = 0.44π, and ω = 0.7π.
+% For this part, derive the filter coefficients of both nulling filters.
+
+
+    % Basic FIR Nulling Filter: y[n] = x[n] - 2cos(ω)x[n-1] + x[n-2]
+    
+    % Coefficients of [FIR 1] for ω = 0.44π:
+    FIR1_b = [1 -2*cos(0.44*pi) 1];
+
+    % Coefficients of [FIR 1] for ω = 0.7π:
+    FIR2_b = [1 -2*cos(0.7*pi) 1];
+
+%% (b) 
+
+% Generate an input signal x[n] that is the sum of three sinusoids:
+% x[n] = 5cos(0.3πn) + 22cos(0.44πn - π/3) + 22cos(0.7πn - π/4)
+    
+    % Make the input signal 150 samples long over the range 0 ≤ n ≤ 149.
+    n = 0:149;
+    x = 5*cos(0.3*pi*n) + 22*cos((0.44*pi*n) - (pi/3)) + 22*cos((0.7*pi*n) - (pi/4));
+    
+%% (c)
+
+% Filter the sum of three sinusoids signal x[n] through the filters designed
+% in part (a). Show the MATLAB code that you wrote to implement the cascade 
+% of two FIR filters.
+
+    % Cascaded FIR Filter = [FIR 1] * [FIR 1]
+    FIR_null = conv(FIR1_b, FIR2_b);
+    
+    % System Response
+    y = conv(x,FIR_null,'same');
+
+%% (d)
+
+% Make a plot of the output signal—show the first 40 points. Determine 
+% (by hand) the exact mathematical formula (magnitude, phase and frequency) 
+% for the output signal for n ≥ 5.
+    
+    % Plot of the filtered signal
+    figure(1)
+    stem(y);
+    xlim([0 40]);
+    xlabel('n');
+    title('Filtered Response Signal y[n]');
+    grid on;
+
+    % Filter response at H(0), H(0.3π), H(0.44π), H(0.7π)
+    w = [0 0.3*pi, 0.44*pi, 0.7*pi];
+    H1 = 1 - (2*cos(0.44*pi))*exp(-1j*w) + exp(-1j*w*2);
+    H2 = 1 - (2*cos(0.7*pi))*exp(-1j*w) + exp(-1j*w*2);
+    H = H1 .* H2;
+
+    H_mag = abs(H);
+    H_rad = angle(H);
+
+     % Exact Mathematical Formula
+    y_exact = 5*cos((0.3*pi*n) - 1.8850)*(1.8828);
+
+%% (e)
+
+% Plot the mathematical formula determined in (d) with MATLAB to show that
+% it matches the filter output over the range  ≤ n ≤ 40.
+    
+    figure(2)
+    hold on
+    stem(y);
+    plot(n-1,y_exact);
+    xlim([0 40]);
+    legend('Filtered Signal y[n]','Exact Signal y[n]');
+    xlabel('n');
+    title('Response Signal y[n]');
+    grid on;
+    hold off
+
+%% (f)
+
+% Explain why the output signal is different for the first few points. 
+% How many "start-up” points are found, and how is this number related to the 
+% lengths of the filters designed in part (a)? Hint: consider the length of a 
+% single FIR filter that is equivalent to the cascade of two length-3 FIRs
+
+fprintf(['There is a high response on the first two (2) points of y[n] \n' ...
+         'which are related to the number of coefficients in the FIR Nulling \n'...
+         'filter, this is due to the cascade realization of the L = 3 FIR filters: \n'...
+         'When two discrete systems are cascaded, we must do a convolution of the \n'...
+         'systems involved h = h1 * h2 with a resulting FIR filter with a number of \n'...
+         'coefficients L1 + L2 - 1 = 5.']);
+
+
+
+%% FRREQUNECY ANALYSIS FOR PROJECT PRESENTATION
+
+% Basic FIR Nulling Filter: y[n] = x[n] - 2cos(ω)x[n-1] + x[n-2]
+    k = 0:149;
+    N = 100;
+    w = (2*pi*k)/N;
+
+    % To block ω = 0.44π:
+    H1 = 1 - (2*cos(0.44*pi))*exp(-1j*w) + exp(-1j*w*2);
+
+    % To block ω = 0.7π:
+    H2 = 1 - (2*cos(0.7*pi))*exp(-1j*w) + exp(-1j*w*2);
+
+    % Cascaded FIR Filter
+    H = H1.*H2;
+
+    % Generate an input signal x[n] that is the sum of three sinusoids:
+    % x[n] = 5cos(0.3πn) + 22cos(0.44πn - π/3) + 22cos(0.7πn - π/4)
+    n = 0:149;
+    x = 5*cos(0.3*pi*n) + 22*cos((0.44*pi*n) - (pi/3)) + 22*cos((0.7*pi*n) - (pi/4));
+    N = 100;
+    
+    % Furier Series Coefficients {ck}
+    ck = dfs(x, N);
+    
+    % Complex exponential signal yk[n]
+    yk = ck .* H;
+
+    % System Response y[n]
+    y = idfs(yk, N);
+    %Plots
+
+    figure(1)
+    subplot(3,1,1)
+    plot(w,abs(ck));
+    title('|x_{k}(ω)|');
+    xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
+    xticklabels({'0','0.3\pi','0.44\pi','0.7\pi','\pi','0.7\pi','0.44\pi','0.3\pi','2\pi'});
+    xlim([0 2*pi]);
+    grid on;
+
+    subplot(3,1,2)
+    plot(w,abs(H));
+    title('|H(ω)|');
+    xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
+    xticklabels({'0','0.3\pi','0.44\pi','0.7\pi','\pi','0.7\pi','0.44\pi','0.3\pi','2\pi'});
+    xlim([0 2*pi]);
+    grid on;
+
+    subplot(3,1,3)
+    plot(w,abs(yk));
+    title('|y_{k}(ω)|');
+    xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
+    xticklabels({'0','0.3\pi','0.44\pi','0.7\pi','\pi','0.7\pi','0.44\pi','0.3\pi','2\pi'});
+    xlim([0 2*pi]);
+    xlabel('ω = 2\pik/N');
+    grid on;
+    
+
+%% Matlab Functions
+function matlab_bug()
+    % (IGNORE)
+    % This is a dummy function that fixes Matlab bug #496201
+    % where outputs are being printed in the end of the publishing html
+    % instead of their respective sections.
+    workaround()
+    %%The answer to everything is...
+    my_subfunction();
+    % (IGNORE)
+end
+
+function DFS = dfs(x, N)
+
+    % Compute the Discrete Fourier Series (DFS) coefficients of a periodic 1-D 
+    % signal, where x is one period of the signal and N is the fundamental period.
+
+    % Find vector x(n) number of elements
+    x_length = numel(x);
+    % Generate discrete n-numbers based on x(n)
+    n = 0:x_length-1;
+    % Preallocate array ck
+    ck = zeros(size(x));
+
+    for k = 0:x_length-1
+
+        ck(k+1) = (1/N) * sum(x(n+1) .* exp((-1j*2*pi*k*n)/N));
+
+    end
+    
+    DFS = conj(ck);
+end
+
+function IDFS = idfs(ck, N)
+    
+    % Compute the Inverse Discrete Fourier Series (IDFS), where X is the 
+    % DFS coefficient array and N is the fundamental period.
+    
+    % Find vector c(k) number of elements
+    ck_length = length(ck);
+    % Generate discrete k-numbers based on c(k)
+    k = 0:ck_length-1;
+    % Preallocate array ck
+    x = zeros(size(ck));
+
+    for n = 0:ck_length-1
+
+        x(n+1) = sum(ck(k+1) .* exp((1j.*2.*pi.*k.*n)./N));
+
+    end
+    
+    IDFS = conj(x);
+end
+
+##### SOURCE END #####
+--></body></html>

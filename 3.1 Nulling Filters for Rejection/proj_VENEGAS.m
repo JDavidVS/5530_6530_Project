@@ -26,25 +26,12 @@ clc;clear;
 
 
     % Basic FIR Nulling Filter: y[n] = x[n] - 2cos(ω)x[n-1] + x[n-2]
-    w = -pi:(2*pi)/149:pi;
-    z = exp(1j*w);
+    
+    % Coefficients of [FIR 1] for ω = 0.44π:
+    FIR1_b = [1 -2*cos(0.44*pi) 1];
 
-    % Coefficients
-    b0 = 1;
-    b1 = 0;     % b1 = -2cos(ω) = 0   nulling coefficient
-    b2 = 1;
-    b = [1 0 1];
-
-    % To block ω = 0.44π:
-    wn1 = 0.44*pi;
-    H1 = 1 - (2*cos(wn1))*(z.^-1) + (z.^-2);
-
-    % To block ω = 0.7π:
-    wn2 = 0.7*pi;
-    H2 = 1 - (2*cos(wn2))*(z.^-1) + (z.^-2);
-
-    % Cascaded FIR Filter
-    H = H1.*H2;
+    % Coefficients of [FIR 1] for ω = 0.7π:
+    FIR2_b = [1 -2*cos(0.7*pi) 1];
 
 %% (b) 
 
@@ -55,16 +42,17 @@ clc;clear;
     n = 0:149;
     x = 5*cos(0.3*pi*n) + 22*cos((0.44*pi*n) - (pi/3)) + 22*cos((0.7*pi*n) - (pi/4));
     
-    N = 100;
-    X = dfs(x,N);
-
 %% (c)
 
 % Filter the sum of three sinusoids signal x[n] through the filters designed
 % in part (a). Show the MATLAB code that you wrote to implement the cascade 
 % of two FIR filters.
 
-    Y = H .* X;
+    % Cascaded FIR Filter = [FIR 1] * [FIR 1]
+    FIR_null = conv(FIR1_b, FIR2_b);
+    
+    % System Response
+    y = conv(x,FIR_null,'same');
 
 %% (d)
 
@@ -72,83 +60,59 @@ clc;clear;
 % (by hand) the exact mathematical formula (magnitude, phase and frequency) 
 % for the output signal for n ≥ 5.
     
-    y = idfs(Y,N);
+    % Plot of the filtered signal
+    figure(1)
+    stem(y);
+    xlim([0 40]);
+    xlabel('n');
+    title('Filtered Response Signal y[n]');
+    grid on;
 
-    X_mag = abs(X);
-    X_phase = angle(X);
+    % Filter response at H(0), H(0.3π), H(0.44π), H(0.7π)
+    w = [0 0.3*pi, 0.44*pi, 0.7*pi];
+    H1 = 1 - (2*cos(0.44*pi))*exp(-1j*w) + exp(-1j*w*2);
+    H2 = 1 - (2*cos(0.7*pi))*exp(-1j*w) + exp(-1j*w*2);
+    H = H1 .* H2;
 
     H_mag = abs(H);
-    H_phase = angle(H);
+    H_rad = angle(H);
 
-    Y_mag = abs(Y);
-    Y_phase = angle(Y);
-    
-    figure(1)
-    subplot(3,1,1)
-    plot(w, X_mag);
-    title("X(ω)");
-    grid on;
-    xlim([-pi pi]);
-    xticks([-pi -0.7*pi -0.44*pi 0  0.44*pi 0.7*pi pi])
-    xticklabels({'-\pi','-0.7\pi','-0.44\pi','0','0.44\pi','0.7\pi','\pi'});
-    
-    subplot(3,1,2)
-    plot(w, H_mag);
-    title("H(ω)");
-    grid on;
-    xlim([-pi pi]);
-    xticks([-pi -0.7*pi -0.44*pi 0  0.44*pi 0.7*pi pi])
-    xticklabels({'-\pi','-0.7\pi','-0.44\pi','0','0.44\pi','0.7\pi','\pi'});
-   
-    subplot(3,1,3)
-    plot(w, Y_mag);
-    xlim([-pi pi]);
-    title("Y(ω)");
-    xlabel("ω");
-    xticks([-pi -0.7*pi -0.44*pi 0  0.44*pi 0.7*pi pi])
-    xticklabels({'-\pi','-0.7\pi','-0.44\pi','0','0.44\pi','0.7\pi','\pi'});
-    grid on;
+     % Exact Mathematical Formula
+    y_exact = 5*cos((0.3*pi*n) - 1.8850)*(1.8828);
 
+%% (e)
+
+% Plot the mathematical formula determined in (d) with MATLAB to show that
+% it matches the filter output over the range  ≤ n ≤ 40.
+    
     figure(2)
     hold on
-    plot(n, abs(y),'r');
-    stem(n, abs(y));
+    stem(y);
+    plot(n-1,y_exact);
     xlim([0 40]);
-    xlabel("n");
-    ylabel("y[n]");
-    title("Output Signal y[n]")
+    legend('Filtered Signal y[n]','Exact Signal y[n]');
+    xlabel('n');
+    title('Response Signal y[n]');
     grid on;
+    hold off
 
-%% Exact Formula for y[n]
+%% (f)
 
-% Find the response H(ω) for For ω = [0.3π, 0.44π, 0.7π]
-w = [0.3*pi, 0.44*pi, 0.7*pi];
-H = 1 - 2*cos(0.7*pi)*exp(-1j*w)  + 2*exp(-1j*2*w)...
-    - (exp(-1j*w) + exp(-1j*3*w))*2*cos(0.44*pi)...
-    + 4*cos(0.44*pi)*cos(0.7*pi)*exp(-1j*2*w)...
-    - (exp(-1j*w) + exp(-1j*3*w))*2*cos(0.7*pi) + exp(-1j*4*w);
+% Explain why the output signal is different for the first few points. 
+% How many "start-up” points are found, and how is this number related to the 
+% lengths of the filters designed in part (a)? Hint: consider the length of a 
+% single FIR filter that is equivalent to the cascade of two length-3 FIRs
 
-H_ph_deg = (angle(H)*180) /pi;
-H_ph_rad = angle(H);
-H_ph_mag = abs(H);
+fprintf(['There is a high response on the first two (2) points of y[n] \n' ...
+         'which are related to the number of coefficients in the FIR Nulling \n'...
+         'filter, this is due to the cascade realization of the L = 3 FIR filters: \n'...
+         'When two discrete systems are cascaded, we must do a convolution of the \n'...
+         'systems involved h = h1 * h2 with a resulting FIR filter with a number of \n'...
+         'coefficients L1 + L2 - 1 = 5.']);
 
-% Exact y[n]
-y_exct = 5*cos((0.3*pi*n) + H_ph_rad(1))*H_ph_mag(1)...
-  + 22*cos((0.44*pi*n) - (pi/3) + H_ph_rad(2))*H_ph_mag(2)...
-  + 22*cos((0.7*pi*n) - (pi/4) + H_ph_rad(3))*H_ph_mag(3);
 
-y_exct_mag = abs(y_exct);
 
-% Plot y[n]
-figure(3)
-hold on
-plot(n, y_exct_mag);
-plot(n,abs(y));
-xlim([5 40]);
-grid on;
-hold off
-
-%% TEST 1
+%% FRREQUNECY ANALYSIS FOR PROJECT PRESENTATION
 
 % Basic FIR Nulling Filter: y[n] = x[n] - 2cos(ω)x[n-1] + x[n-2]
     k = 0:149;
@@ -169,21 +133,21 @@ hold off
     n = 0:149;
     x = 5*cos(0.3*pi*n) + 22*cos((0.44*pi*n) - (pi/3)) + 22*cos((0.7*pi*n) - (pi/4));
     N = 100;
+    
+    % Furier Series Coefficients {ck}
+    ck = dfs(x, N);
+    
+    % Complex exponential signal yk[n]
+    yk = ck .* H;
 
-    X = dfs(x,N);
-
-    % System Response 
-    % Y[k]
-    Y = X .* H;
-    % y[n]
-    y = idfs(Y,N);
-
+    % System Response y[n]
+    y = idfs(yk, N);
     %Plots
 
     figure(1)
     subplot(3,1,1)
-    plot(w,abs(X));
-    title('|X(ω)|');
+    plot(w,abs(ck));
+    title('|x_{k}(ω)|');
     xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
     xticklabels({'0','0.3\pi','0.44\pi','0.7\pi','\pi','0.7\pi','0.44\pi','0.3\pi','2\pi'});
     xlim([0 2*pi]);
@@ -198,45 +162,14 @@ hold off
     grid on;
 
     subplot(3,1,3)
-    plot(w,abs(Y));
-    title('|Y(ω)|');
+    plot(w,abs(yk));
+    title('|y_{k}(ω)|');
     xticks([0  0.3*pi 0.44*pi 0.7*pi pi pi+0.3*pi pi+0.44*pi pi+0.7*pi 2*pi])
     xticklabels({'0','0.3\pi','0.44\pi','0.7\pi','\pi','0.7\pi','0.44\pi','0.3\pi','2\pi'});
     xlim([0 2*pi]);
     xlabel('ω = 2\pik/N');
     grid on;
     
-
-%% TEST 2
-w = [0 0.3*pi, 0.44*pi, 0.7*pi];
-% 0.44pi
-H1 = 1 - (2*cos(0.44*pi))*exp(-1j*w) + exp(-1j*w*2);
-H2 = 1 - (2*cos(0.7*pi))*exp(-1j*w) + exp(-1j*w*2);
-H = H1 .* H2;
-
-H_ph_mag = abs(H);
-H_ph_rad = angle(H);
-
-
-% Exact y[n]
-y_tr = H_ph_mag(1);
-y_ss = ...
-  + 5*cos((0.3*pi*n) + H_ph_rad(2))*H_ph_mag(2)...
-  + 22*cos((0.44*pi*n) - (pi/3) + H_ph_rad(3))*H_ph_mag(3)...
-  + 22*cos((0.7*pi*n) - (pi/4) + H_ph_rad(4))*H_ph_mag(4);
-
-y_exact = y_tr + y_ss;
-
-% Plot y[n]
-figure(3)
-hold on
-plot(n, abs(y_exact));
-plot(n, abs(y));
-xlim([0 150]);
-legend('Exact Signal y[n]','Filtered Signal y[n]');
-grid on;
-hold off
-
 
 %% Matlab Functions
 function matlab_bug()
@@ -289,5 +222,5 @@ function IDFS = idfs(ck, N)
 
     end
     
-    IDFS = x;
+    IDFS = conj(x);
 end
