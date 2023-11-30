@@ -1,7 +1,10 @@
 # 2.3 - Removing Interference from a Speech Signal
 
-- The project was completed using the [Lab_2_3.m](Lab_2_3.m) file.
-- The document showing the code along with the outputs of the plots is located [here](html/Lab_2_3.html).
+- The project was completed using Matlab. The file can be found [here](Lab_2_3.m).
+- The html page showing the code along with the outputs of the plots is located [here](html/Lab_2_3.html).
+- The audio files are linked below.
+    - [Original Audio File](BadAudio.flac)
+    - [Filtered Audio File](FilteredAudio.flac)
 
 ## Prompt from the Document
 
@@ -11,12 +14,6 @@
 - **Part b)** Design a cascade of two FIR nulling filters to remove the sinusoids completely. This can be accomplished by finding the numerical values of the filter coefficients for each second-order nulling filter. Combine the cascaded filters into one equivalent FIR filter, and give the filter coefficients of the equivalent filter.
 - **Part c)** Plot the frequency response of the cascaded nulling filter designed in the previous part. Indicate the frequencies where the nulls are found.
 - **Part d)** Process the corrupted signal, xxbad, through the nulling filters. Make two spectrograms (in dB): one for the input signal and the other for the output signal. Point out features that verify that the nulling filters operated correctly.
-
-## Output Graphs
-
-![Original Signal Spectrum](BadSignalSpectrum.png)
-![Filtered Signal Spectrum](BadSignalSpectrum.png)
-![Spectral Response of FIR Filter](FilterSpectralResponse.png)
 
 ## Filter Design
 
@@ -32,3 +29,9 @@ Here the two second-order filters are combined into a fourth-order filter.
 Here the two second-order filters are combined into a fourth-order filter.
 
 ![Combined Fourth-Order Filter](CombinedFilter.drawio.svg)
+
+## Output Graphs
+
+![Original Signal Spectrum](BadSignalSpectrum.png)
+![Filtered Signal Spectrum](BadSignalSpectrum.png)
+![Spectral Response of FIR Filter](FilterSpectralResponse.png)
