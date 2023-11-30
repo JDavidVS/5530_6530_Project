@@ -33,5 +33,5 @@ Here the two second-order filters are combined into a fourth-order filter.
 ## Output Graphs
 
 ![Original Signal Spectrum](BadSignalSpectrum.png)
-![Filtered Signal Spectrum](BadSignalSpectrum.png)
+![Filtered Signal Spectrum](FilteredSignalSpectrum.png)
 ![Spectral Response of FIR Filter](FilterSpectralResponse.png)
