@@ -1,0 +1,446 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Lab_2_3</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-11-29"><meta name="DC.source" content="Lab_2_3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">2.3 Lab-HW: Removing Interference from a Speech Signal</a></li><li><a href="#2">Part A</a></li><li><a href="#3">Part B</a></li><li><a href="#4">Part C</a></li><li><a href="#5">Data Output</a></li></ul></div><h2 id="1">2.3 Lab-HW: Removing Interference from a Speech Signal</h2><pre class="codeinput"><span class="comment">% Quinn Alleman</span>
+<span class="comment">% Project for ECE-6720</span>
+
+clear;clc;
+
+playBadAudio = false;
+playNewAudio = false;
+saveAudioFiles = false;
+savePlots = false;
+</pre><h2 id="2">Part A</h2><pre class="codeinput"><span class="comment">% Load in the speechbad file</span>
+<span class="comment">% it contains on signal, xxbad, which is the sum of the speech signal and</span>
+<span class="comment">% the very large amplitude sinusiods at 1555 Hz and 2222 Hz.</span>
+
+load(<span class="string">"speechbad.mat"</span>);
+
+<span class="comment">% Interference frequencies are in f_interference vector.</span>
+
+<span class="comment">% Sampling rate is 8000 Hz. This is the fs variable.</span>
+<span class="comment">% The good speech signal is scaled so the max value is one</span>
+A_speech = 1;
+
+<span class="comment">% Make a spectrogram (in dB).</span>
+spectrumData = fft(xxbad);
+n = length(xxbad); <span class="comment">% number of samples</span>
+f = (0:n-1)*(fs/n); <span class="comment">% frequency range</span>
+signalLength = (length(xxbad)-1)/fs;
+badSignalSpectrum = db(abs(spectrumData), <span class="string">"power"</span>);
+
+
+figure_PartA_Spectrum = figure(1);
+hold <span class="string">on</span>;
+plot(f,badSignalSpectrum);
+xlabel(<span class="string">'Frequency (Hz)'</span>);
+ylabel(<span class="string">'Magnitude (db)'</span>);
+title(<span class="string">'Spectrum of Bad Audio Signal'</span>);
+ylim([0 60]);
+xlim([0 fs/2]); <span class="comment">% Plot up to the nyquist frequency.</span>
+<span class="keyword">for</span> i = 1:length(f_interference)
+    xline = f_interference(i);
+    ymin = min(ylim);
+    line([xline xline], ylim, <span class="string">'LineStyle'</span>, <span class="string">':'</span>, <span class="string">'Color'</span>, <span class="string">'r'</span>);
+    <span class="comment">% text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');</span>
+    <span class="comment">% text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');</span>
+<span class="keyword">end</span>
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="Lab_2_3_01.png" alt=""> <h2 id="3">Part B</h2><p>Create a cascaded set of two second-order nulling filters for the two frequencies.</p><pre class="codeinput"><span class="comment">% For filter a, it nulls the 2222 Hz signal</span>
+a = zeros([1 3]);
+a(1) = 1;
+a(2) = -2 * cos((2222/8000)*(2*pi));
+a(3) = 1;
+
+
+<span class="comment">% For filter a, it nulls the 1555 Hz signal</span>
+b = zeros([1 3]);
+b(1) = 1;
+b(2) = -2 * cos((1555/8000)*(2*pi));
+b(3) = 1;
+
+<span class="comment">% Normalize Filters</span>
+<span class="comment">% a = a/sum(a);</span>
+<span class="comment">% b=b/sum(b);</span>
+
+<span class="comment">% Convolve the two second-order filters to get a single fourth-order</span>
+<span class="comment">% filter.</span>
+c = conv(a, b);
+
+<span class="comment">% Normalize the filter.</span>
+<span class="comment">% c = c/sum(c);</span>
+
+responseResolution = 500;
+frequencyRange = linspace(0, 2*pi, responseResolution);
+frequencyRangeHz = linspace(0, fs, responseResolution);
+spectralResponse = zeros(size(frequencyRange));
+
+<span class="keyword">for</span> k = 1:responseResolution
+    total = 0;
+    <span class="keyword">for</span> n = 1:length(c)
+        total = total + exp(-1*1i*frequencyRange(k)*(n-1)) * c(n);
+    <span class="keyword">end</span>
+    spectralResponse(k) = total;
+<span class="keyword">end</span>
+
+<span class="comment">% Get the magnitude and phase response of the spectral response</span>
+magnitudeResponse = abs(spectralResponse);
+phaseResponse = angle(spectralResponse);
+
+<span class="comment">% Convert the values into the ones that need to be plotted.</span>
+magnitudePlotResponseDB = fftshift(db(magnitudeResponse, <span class="string">"power"</span>));
+phaseResponsePlot = fftshift(angle(spectralResponse));
+frequencyRangePlot = linspace(-pi, pi, responseResolution);
+
+<span class="comment">% Plot the magnitude response</span>
+filterSpectralResponseFig = figure(2);
+hold <span class="string">on</span>;
+subplot(2,1,1);
+plot(frequencyRangePlot, magnitudePlotResponseDB); <span class="comment">% Magnitude in dB</span>
+<span class="comment">% Plot a vertical line</span>
+<span class="keyword">for</span> i = 1:length(f_interference)
+    xline = f_interference(i);
+    xline_radians_s = xline/fs*2*(pi);
+    ymin = min(magnitudePlotResponseDB);
+    line([xline_radians_s xline_radians_s], ylim, <span class="string">'LineStyle'</span>, <span class="string">':'</span>, <span class="string">'Color'</span>, <span class="string">'r'</span>);
+    <span class="comment">% text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');</span>
+    <span class="comment">% text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');</span>
+<span class="keyword">end</span>
+xlabel(<span class="string">'Frequency (rad/sec)'</span>);
+ylabel(<span class="string">'Magnitude (dB)'</span>);
+title(<span class="string">'Magnitude Response'</span>);
+set(gca,<span class="string">'XTick'</span>,-pi:pi/2:pi)
+set(gca,<span class="string">'XTickLabel'</span>,{<span class="string">'-\pi'</span>,<span class="string">'-\pi/2'</span>,<span class="string">'0'</span>,<span class="string">'\pi/2'</span>,<span class="string">'\pi'</span>})
+
+<span class="comment">% Plot the phase response</span>
+subplot(2,1,2);
+plot(frequencyRangePlot, phaseResponsePlot); <span class="comment">% Phase in degrees</span>
+xlabel(<span class="string">'Frequency (rad/sec)'</span>);
+ylabel(<span class="string">'Phase (radians)'</span>);
+title(<span class="string">'Phase Response'</span>);
+set(gca,<span class="string">'XTick'</span>,-pi:pi/2:pi)
+set(gca,<span class="string">'XTickLabel'</span>,{<span class="string">'-\pi'</span>,<span class="string">'-\pi/2'</span>,<span class="string">'0'</span>,<span class="string">'\pi/2'</span>,<span class="string">'\pi'</span>})
+set(gca,<span class="string">'YTick'</span>,-pi:pi/2:pi)
+set(gca,<span class="string">'YTickLabel'</span>,{<span class="string">'-\pi'</span>,<span class="string">'-\pi/2'</span>,<span class="string">'0'</span>,<span class="string">'\pi/2'</span>,<span class="string">'\pi'</span>})
+<span class="keyword">for</span> i = 1:length(f_interference)
+    xline = f_interference(i);
+    xline_radians_s = xline/fs*2*(pi);
+    ymin = min(phaseResponsePlot);
+    line([xline_radians_s xline_radians_s], ylim, <span class="string">'LineStyle'</span>, <span class="string">':'</span>, <span class="string">'Color'</span>, <span class="string">'r'</span>);
+    <span class="comment">% text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');</span>
+    <span class="comment">% text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');</span>
+<span class="keyword">end</span>
+hold <span class="string">off</span>;
+
+<span class="comment">% Filter the audio signal.</span>
+filteredSignal = filter(c, length(xxbad)/fs, xxbad);
+</pre><img vspace="5" hspace="5" src="Lab_2_3_02.png" alt=""> <h2 id="4">Part C</h2><p>Make a spectrogram (in dB).</p><pre class="codeinput">spectrumData = fft(filteredSignal);
+n = length(filteredSignal); <span class="comment">% number of samples</span>
+f = (0:n-1)*(fs/n); <span class="comment">% frequency range</span>
+signalLength = (length(filteredSignal)-1)/fs;
+goodSignalSpectrum = db(abs(spectrumData), <span class="string">"power"</span>);
+
+
+figure_PartC_Spectrum = figure(3);
+hold <span class="string">on</span>;
+plot(f,goodSignalSpectrum);
+xlabel(<span class="string">'Frequency (Hz)'</span>);
+ylabel(<span class="string">'Magnitude (db)'</span>);
+title(<span class="string">'Spectrum of Filtered Audio Signal'</span>);
+ylim([0 60]);
+xlim([0 fs/2]); <span class="comment">% Plot up to the nyquist frequency.</span>
+<span class="keyword">for</span> i = 1:length(f_interference)
+    xline = f_interference(i);
+    ymin = min(ylim);
+    line([xline xline], ylim, <span class="string">'LineStyle'</span>, <span class="string">':'</span>, <span class="string">'Color'</span>, <span class="string">'r'</span>);
+    <span class="comment">% text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');</span>
+    <span class="comment">% text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');</span>
+<span class="keyword">end</span>
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="Lab_2_3_03.png" alt=""> <h2 id="5">Data Output</h2><pre class="codeinput"><span class="comment">% Play the Audio Signals in Matlab</span>
+<span class="keyword">if</span> (playBadAudio)
+    sound(xxbad, fs);
+<span class="keyword">end</span>
+<span class="keyword">if</span> (playNewAudio)
+    sound(filteredSignal, fs);
+<span class="keyword">end</span>
+
+<span class="comment">% Save the audio files</span>
+<span class="keyword">if</span> (saveAudioFiles)
+    badAudioFilename = <span class="string">'BadAudio.flac'</span>;
+    filteredAudioFilename = <span class="string">'FilteredAudio.flac'</span>;
+    audiowrite(badAudioFilename, xxbad, fs);
+    audiowrite(filteredAudioFilename, filteredSignal, fs);
+<span class="keyword">end</span>
+
+<span class="comment">% Save the plots</span>
+<span class="keyword">if</span> (savePlots)
+    saveas(figure_PartA_Spectrum,<span class="string">'BadSignalSpectrum.png'</span>);
+    saveas(filterSpectralResponseFig,<span class="string">'FilterSpectralResponse.png'</span>);
+    saveas(figure_PartC_Spectrum,<span class="string">'FilteredSignalSpectrum.png'</span>);
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% 2.3 Lab-HW: Removing Interference from a Speech Signal
+
+% Quinn Alleman
+% Project for ECE-6720
+
+clear;clc;
+
+playBadAudio = false;
+playNewAudio = false;
+saveAudioFiles = false;
+savePlots = false;
+
+%% Part A
+
+% Load in the speechbad file
+% it contains on signal, xxbad, which is the sum of the speech signal and
+% the very large amplitude sinusiods at 1555 Hz and 2222 Hz.
+
+load("speechbad.mat");
+
+% Interference frequencies are in f_interference vector.
+
+% Sampling rate is 8000 Hz. This is the fs variable.
+% The good speech signal is scaled so the max value is one
+A_speech = 1;
+
+% Make a spectrogram (in dB).
+spectrumData = fft(xxbad);
+n = length(xxbad); % number of samples
+f = (0:n-1)*(fs/n); % frequency range
+signalLength = (length(xxbad)-1)/fs;
+badSignalSpectrum = db(abs(spectrumData), "power");
+
+
+figure_PartA_Spectrum = figure(1);
+hold on;
+plot(f,badSignalSpectrum);
+xlabel('Frequency (Hz)');
+ylabel('Magnitude (db)');
+title('Spectrum of Bad Audio Signal');
+ylim([0 60]);
+xlim([0 fs/2]); % Plot up to the nyquist frequency.
+for i = 1:length(f_interference)
+    xline = f_interference(i);
+    ymin = min(ylim);
+    line([xline xline], ylim, 'LineStyle', ':', 'Color', 'r');
+    % text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');
+    % text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');
+end
+hold off;
+
+%% Part B
+% Create a cascaded set of two second-order nulling filters for the two
+% frequencies.
+
+% For filter a, it nulls the 2222 Hz signal
+a = zeros([1 3]);
+a(1) = 1;
+a(2) = -2 * cos((2222/8000)*(2*pi));
+a(3) = 1;
+
+
+% For filter a, it nulls the 1555 Hz signal
+b = zeros([1 3]);
+b(1) = 1;
+b(2) = -2 * cos((1555/8000)*(2*pi));
+b(3) = 1;
+
+% Normalize Filters
+% a = a/sum(a);
+% b=b/sum(b);
+
+% Convolve the two second-order filters to get a single fourth-order
+% filter.
+c = conv(a, b);
+
+% Normalize the filter.
+% c = c/sum(c);
+
+responseResolution = 500;
+frequencyRange = linspace(0, 2*pi, responseResolution);
+frequencyRangeHz = linspace(0, fs, responseResolution);
+spectralResponse = zeros(size(frequencyRange));
+
+for k = 1:responseResolution
+    total = 0;
+    for n = 1:length(c)
+        total = total + exp(-1*1i*frequencyRange(k)*(n-1)) * c(n);
+    end
+    spectralResponse(k) = total;
+end
+
+% Get the magnitude and phase response of the spectral response
+magnitudeResponse = abs(spectralResponse);
+phaseResponse = angle(spectralResponse);
+
+% Convert the values into the ones that need to be plotted.
+magnitudePlotResponseDB = fftshift(db(magnitudeResponse, "power"));
+phaseResponsePlot = fftshift(angle(spectralResponse));
+frequencyRangePlot = linspace(-pi, pi, responseResolution);
+
+% Plot the magnitude response
+filterSpectralResponseFig = figure(2);
+hold on;
+subplot(2,1,1);
+plot(frequencyRangePlot, magnitudePlotResponseDB); % Magnitude in dB
+% Plot a vertical line
+for i = 1:length(f_interference)
+    xline = f_interference(i);
+    xline_radians_s = xline/fs*2*(pi);
+    ymin = min(magnitudePlotResponseDB);
+    line([xline_radians_s xline_radians_s], ylim, 'LineStyle', ':', 'Color', 'r');
+    % text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');
+    % text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');
+end
+xlabel('Frequency (rad/sec)');
+ylabel('Magnitude (dB)');
+title('Magnitude Response');
+set(gca,'XTick',-pi:pi/2:pi)
+set(gca,'XTickLabel',{'-\pi','-\pi/2','0','\pi/2','\pi'})
+
+% Plot the phase response
+subplot(2,1,2);
+plot(frequencyRangePlot, phaseResponsePlot); % Phase in degrees
+xlabel('Frequency (rad/sec)');
+ylabel('Phase (radians)');
+title('Phase Response');
+set(gca,'XTick',-pi:pi/2:pi)
+set(gca,'XTickLabel',{'-\pi','-\pi/2','0','\pi/2','\pi'})
+set(gca,'YTick',-pi:pi/2:pi)
+set(gca,'YTickLabel',{'-\pi','-\pi/2','0','\pi/2','\pi'})
+for i = 1:length(f_interference)
+    xline = f_interference(i);
+    xline_radians_s = xline/fs*2*(pi);
+    ymin = min(phaseResponsePlot);
+    line([xline_radians_s xline_radians_s], ylim, 'LineStyle', ':', 'Color', 'r');
+    % text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');
+    % text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');
+end
+hold off;
+
+% Filter the audio signal.
+filteredSignal = filter(c, length(xxbad)/fs, xxbad);
+
+
+%% Part C
+% Make a spectrogram (in dB).
+spectrumData = fft(filteredSignal);
+n = length(filteredSignal); % number of samples
+f = (0:n-1)*(fs/n); % frequency range
+signalLength = (length(filteredSignal)-1)/fs;
+goodSignalSpectrum = db(abs(spectrumData), "power");
+
+
+figure_PartC_Spectrum = figure(3);
+hold on;
+plot(f,goodSignalSpectrum);
+xlabel('Frequency (Hz)');
+ylabel('Magnitude (db)');
+title('Spectrum of Filtered Audio Signal');
+ylim([0 60]);
+xlim([0 fs/2]); % Plot up to the nyquist frequency.
+for i = 1:length(f_interference)
+    xline = f_interference(i);
+    ymin = min(ylim);
+    line([xline xline], ylim, 'LineStyle', ':', 'Color', 'r');
+    % text(xline_radians_s, max(ylim), sprintf('%g Hz', xline), 'HorizontalAlignment', 'right', 'Rotation', 90, 'Color', 'k');
+    % text(xline_radians_s, ymin, sprintf('%g Hz', xline), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center');
+end
+hold off;
+
+%% Data Output
+
+% Play the Audio Signals in Matlab
+if (playBadAudio)
+    sound(xxbad, fs);
+end
+if (playNewAudio)
+    sound(filteredSignal, fs);
+end
+
+% Save the audio files
+if (saveAudioFiles)
+    badAudioFilename = 'BadAudio.flac';
+    filteredAudioFilename = 'FilteredAudio.flac';
+    audiowrite(badAudioFilename, xxbad, fs);
+    audiowrite(filteredAudioFilename, filteredSignal, fs);
+end
+
+% Save the plots
+if (savePlots)
+    saveas(figure_PartA_Spectrum,'BadSignalSpectrum.png');
+    saveas(filterSpectralResponseFig,'FilterSpectralResponse.png');
+    saveas(figure_PartC_Spectrum,'FilteredSignalSpectrum.png');
+end
+##### SOURCE END #####
+--></body></html>
