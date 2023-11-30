@@ -1,7 +1,7 @@
 # 2.3 - Removing Interference from a Speech Signal
 
 - The project was completed using the [Lab_2_3.m](Lab_2_3.m) file.
-- The document showing the code along with the outputs of the plots is located [here](html\Lab_2_3.html).
+- The document showing the code along with the outputs of the plots is located [here](html/Lab_2_3.html).
 
 ## Prompt from the Document
 
