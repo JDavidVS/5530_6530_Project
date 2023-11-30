@@ -1,12 +1,14 @@
 # 2.3 - Removing Interference from a Speech Signal
 
+The audio in the provided file says "Thieves who rob from friends deserve jail". This is a standard ["Harvard Sentence"](https://www.cs.columbia.edu/~hgs/audio/harvard.html) used in many fields for telecommunications and audio processing.
+
 - The project was completed using Matlab. The file can be found [here](Lab_2_3.m).
 - The html page showing the code along with the outputs of the plots is located [here](html/Lab_2_3.html).
 - The audio files are linked below.
     - [Original Audio File](BadAudio.flac)
     - [Filtered Audio File](FilteredAudio.flac)
 
-## Prompt from the Document
+## Prompt for Lab 2.3
 
 **Part 2.3 Design an FIR nulling filter to remove two interfering sinusoids, and also assess how much the desired signal is distorted by the nulling process.**
 
