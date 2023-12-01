@@ -5,8 +5,8 @@ The audio in the provided file says "Thieves who rob from friends deserve jail".
 - The project was completed using Matlab. The file can be found [here](Lab_2_3.m).
 - The html page showing the code along with the outputs of the plots is located [here](html/Lab_2_3.html).
 - The audio files are linked below.
-    - [Original Audio File](BadAudio.flac)
-    - [Filtered Audio File](FilteredAudio.flac)
+    - [Original Audio File](AudioSignals/BadAudio.flac)
+    - [Filtered Audio File](AudioSignals/FilteredAudio.flac)
 
 ## Prompt for Lab 2.3
 
@@ -20,20 +20,20 @@ The audio in the provided file says "Thieves who rob from friends deserve jail".
 ## Filter Design
 
 ### Original Cascade Second-Order Nulling Filters
-![Cascaded Filters](CascadeFilters.drawio.svg)
+![Cascaded Filters](Figures/CascadeFilters.drawio.svg)
 
 ### Combining the Filters
 Here the two second-order filters are combined into a fourth-order filter.
 
-![Combining Filters](FilterCombinationAction.drawio.svg)
+![Combining Filters](Figures/FilterCombinationAction.drawio.svg)
 
 ### Resulting Fourth-Order Nulling Filter
 Here the two second-order filters are combined into a fourth-order filter.
 
-![Combined Fourth-Order Filter](CombinedFilter.drawio.svg)
+![Combined Fourth-Order Filter](Figures/CombinedFilter.drawio.svg)
 
 ## Output Graphs
 
-![Original Signal Spectrum](BadSignalSpectrum.png)
-![Filtered Signal Spectrum](FilteredSignalSpectrum.png)
-![Spectral Response of FIR Filter](FilterSpectralResponse.png)
+![Original Signal Spectrum](MatlabPlots/BadSignalSpectrum.png)
+![Filtered Signal Spectrum](MatlabPlots/FilteredSignalSpectrum.png)
+![Spectral Response of FIR Filter](MatlabPlots/FilterSpectralResponse.png)

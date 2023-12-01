@@ -181,15 +181,15 @@ end
 
 % Save the audio files
 if (saveAudioFiles)
-    badAudioFilename = 'BadAudio.flac';
-    filteredAudioFilename = 'FilteredAudio.flac';
+    badAudioFilename = 'AudioSignals/BadAudio.flac';
+    filteredAudioFilename = 'AudioSignals/FilteredAudio.flac';
     audiowrite(badAudioFilename, xxbad, fs);
     audiowrite(filteredAudioFilename, filteredSignal, fs);
 end
 
 % Save the plots
 if (savePlots)
-    saveas(figure_PartA_Spectrum,'BadSignalSpectrum.png');
-    saveas(filterSpectralResponseFig,'FilterSpectralResponse.png');
-    saveas(figure_PartC_Spectrum,'FilteredSignalSpectrum.png');
+    saveas(figure_PartA_Spectrum,'MatlabPlots/BadSignalSpectrum.png');
+    saveas(filterSpectralResponseFig,'MatlabPlots/FilterSpectralResponse.png');
+    saveas(figure_PartC_Spectrum,'MatlabPlots/FilteredSignalSpectrum.png');
 end
