@@ -4,9 +4,7 @@
 
 For digital signal processing, frequency selective filters play a crucial role. These filters can help reduce specific frequency components of the signals. Two of these filters are the nulling filter, which is designed to suppress unwanted frequencies, and the bandpass filter, which isolates a specific range of frequencies to allow.
 
-Traditional methods of implementing these filters often encounter limitations, such as phase distortion and a lack of flexibility in adapting to different signal conditions. Finite Impulse Response (FIR) filters emerge as a robust alternative, offering distinct advantages in both nulling and bandpass applications.
-
-In speech signal processing, bandpass FIR filters isolate the frequencies pertinent to human speech, enhancing clarity and intelligibility. Meanwhile, nulling FIR filters suppress noise and interference.
+Traditional methods of implementing these filters often encounter limitations. Finite Impulse Response (FIR) filters emerge as a robust alternative, offering distinct advantages in both nulling and bandpass applications. In speech signal processing, bandpass FIR filters isolate the frequencies pertinent to human speech, enhancing clarity and intelligibility. Meanwhile, nulling FIR filters suppress noise and interference.
 
 ## Introduction
 
