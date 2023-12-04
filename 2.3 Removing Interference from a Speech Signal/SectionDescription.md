@@ -34,6 +34,7 @@ Here the two second-order filters are combined into a fourth-order filter.
 
 ## Output Graphs
 
+![Spectrogram of Audio Signals](MatlabPlots/Spectrogram.png)
 ![Original Signal Spectrum](MatlabPlots/BadSignalSpectrum.png)
 ![Filtered Signal Spectrum](MatlabPlots/FilteredSignalSpectrum.png)
 ![Spectral Response of FIR Filter](MatlabPlots/FilterSpectralResponse.png)
