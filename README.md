@@ -27,25 +27,34 @@ The frequency response function for FIR filters is introduced. The magnitude and
 # Poster Sections Plan
 
 ## Background Section
-Digital signal processing. What are some of the general purposes of filters?
+- Filtering for Null Frequencies and Bandpass
+- 
+
+
+
+## Background
+
+For digital signal processing, frequency selective filters play a crucial role. These filters can help reduce specific frequency components of the signals. Two of these filters are the nulling filter, which is designed to suppress unwanted frequencies, and the bandpass filter, which isolates a specific range of frequencies to allow.
+
+Traditional methods of implementing these filters often encounter limitations, such as phase distortion and a lack of flexibility in adapting to different signal conditions. Finite Impulse Response (FIR) filters emerge as a robust alternative, offering distinct advantages in both nulling and bandpass applications.
+
+In speech signal processing, bandpass FIR filters isolate the frequencies pertinent to human speech, enhancing clarity and intelligibility. Meanwhile, nulling FIR filters suppress noise and interference.
 
 ## Introduction
-FIR filters
-- Nulling Filters
-- Bandpass Filters
-Any figures to show how these work or are structured?
 
-## 2.3 Removing interference from a Speech Signal
+Our project explores various applications for Finite Impulse Response (FIR) filters. We have focused on their behavior as nulling filters and bandpass filters for discrete signals.
+
+## Nulling Filters for Rejection (3.1)
+
+## Simple Bandpass Filter Design (3.2)
+
+## Removing Interferance from a Speech Signal (2.3)
 - 3 structure figures
 - 3 graphs from matlab
 
-## 3.1 Nulling Filters for Rejection
-
-## 3.2 Simple Bandpass Filter Design
-
 ## Summary/Conclusion
 
-## References
+## References 
 If needed?
 - Book
 - Labs (Links for the project)
