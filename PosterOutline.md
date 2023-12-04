@@ -8,7 +8,8 @@ Traditional methods of implementing these filters often encounter limitations. F
 
 ## Introduction
 
-Our project explores various applications for Finite Impulse Response (FIR) filters. We have focused on their behavior as nulling filters and bandpass filters for discrete signals.
+Our project explores various applications for Finite Impulse Response (FIR) filters. We have focused on their behavior as nulling filters and bandpass filters for discrete signals and how they can be applied to speech signals.
+
 
 ## Nulling Filters for Rejection (3.1)
 
