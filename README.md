@@ -1,5 +1,11 @@
 # ECE 6530 Digital Signal Processing - Semester Project
-David Venegas, Ahmed Almusawi, Quinn Alleman
+ECE 6530: Digital Signal Processing
+University of Utah
+
+Team:
+-David Venegas
+-Ahmed Almusawi
+-Quinn Alleman
 
 ## Frequency Response of FIR Filters
 
@@ -8,7 +14,7 @@ The frequency response function for FIR filters is introduced. The magnitude and
 ## Project Contents
 - [2.3 Removing Interference from a Speech Signal](<2.3 Removing Interference from a Speech Signal/SectionDescription.md>)
     - [Link to Website](<http://dspfirst.gatech.edu/chapters/06firfreq/overview.html>)
-- [3.1 Nulling Filters for Rejection](<3.1 Nulling Filters for Rejection/html/proj_VENEGAS.html>)
+- [3.1 Nulling Filters for Rejection](<3.1 Nulling Filters for Rejection/nulling.md>)
     - [Link to Website](<https://dspfirst.gatech.edu/chapters/06firfreq/labs/BPFnullingFilters/BPFnullingFilters.pdf>)
 - [3.2 Simple Bandpass Filter Design](<3.2SimpleBandpassFilterDesign>)
     - [Link to Website](<https://dspfirst.gatech.edu/chapters/06firfreq/labs/BPFnullingFilters/BPFnullingFilters.pdf>)
@@ -57,4 +63,14 @@ Our project explores various applications for Finite Impulse Response (FIR) filt
 ## References 
 If needed?
 - Book
-- Labs (Links for the project)
+*[1] J. G. Proakis, D. G. Manolakis, Digital Signal Processing: Principles, Algorithms, and Applications 4rd Ed. Upper Saddle River, NJ: Pearson Prentice Hall, 2006.*
+
+- Labs
+  
+(Lab P-12: Frequency Response: Bandpass and Nulling Filters)
+
+*[2] DPS First 2e Georgia Tech, “Frequency Response: Bandpass and Nulling Filters,” Georgia Tech. [Online]. Available: https://dspfirst.gatech.edu/chapters/06firfreq/labs/BPFnullingFilters/BPFnullingFilters.pdf. [Accessed: Dec. 3, 2023].*
+
+(Lab S-5: DLTI GUI and Nulling Filters)
+
+*[3] DPS First 2e Georgia Tech, “DLTI GUI and Nulling Filters,” Georgia Tech. [Online]. Available: https://dspfirst.gatech.edu/chapters/06firfreq/labs/DLTInulling/DLTInulling.pdf. [Accessed: Dec. 3, 2023].*
