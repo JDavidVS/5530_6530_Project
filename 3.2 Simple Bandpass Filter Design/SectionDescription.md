@@ -5,6 +5,8 @@ The L-point averaging filter is a lowpass filter. Its passband width is controll
 
 It is also possible to create a filter whose passband is centered around some frequency other than zero. One simple way to do this is to define the impulse response of an L-point FIR as:
 
+- [Graphs](<3.2 Simple Bandpass Filter Design/Graphs>)
+
 1. [Graphs](Breadcrumbs5530_6530_Project/3.2%20Simple%20Bandpass%20Filter%20Design/Graphs)- Link to Graphs file
 2. [HTML](Breadcrumbs5530_6530_Project/3.2%20Simple%20Bandpass%20Filter%20Design/two-HTML) - Link to HTML file
 3. [Matlab File](Breadcrumbs5530_6530_Project/3.2%20Simple%20Bandpass%20Filter%20Design/three-Matlab-File) - Link to Matlab file
