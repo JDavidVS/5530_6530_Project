@@ -10,8 +10,8 @@ Traditional methods of implementing these filters often encounter limitations. F
 
 Our project explores various applications for Finite Impulse Response (FIR) filters. We have focused on their behavior as nulling filters and bandpass filters for discrete signals and how they can be applied to speech signals.
 
-
 ## Nulling Filters for Rejection (3.1)
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/e3ab55ef-c63c-46bb-bf77-764062de67a3)
 
 ## Simple Bandpass Filter Design (3.2)
 ![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/0f675a11-cfaa-41a6-a791-05e5898206b2)
@@ -19,10 +19,14 @@ Our project explores various applications for Finite Impulse Response (FIR) filt
 ## Removing Interferance from a Speech Signal (2.3)
 - 3 structure figures
 - 3 graphs from matlab
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/3d221607-cd27-4592-8822-0bb847b56d38)
 
 ## Summary/Conclusion
 
-- **Need to add in the conclusion.**
+In the realm of digital signal processing, digital frequency selective filters are designed to selectively pass or attenuate specific frequency components of a digital signal, allowing for precise control over the frequency response characteristics. FIR filters are characterized by their linear phase response, which means that they introduce a constant delay across all frequencies. This property is particularly advantageous in applications where preserving the phase relationship of the signal is crucial, such as in audio processing or telecommunications. FIR filters offer flexibility in designing the desired frequency response. By adjusting the filter coefficients, one can shape the filter's response to meet specific requirements. 
+
+This flexibility allows for tasks such as noise reduction, signal enhancement, and signal separation, where specific frequency components need to be emphasized or suppressed. Moreover, FIR filters can be implemented efficiently using various algorithms, such as the windowing method or the Frequency Sampling method. These algorithms enable the design of FIR filters with desired frequency response characteristics while optimizing for factors like filter length and computational complexity. In summary, FIR filters are an essential tool in digital signal processing, providing precise control over the frequency response of a signal. Their linear phase response, stability, and flexibility make them suitable for a wide range of applications, from audio processing to telecommunications.
+
 
 ## References 
 
