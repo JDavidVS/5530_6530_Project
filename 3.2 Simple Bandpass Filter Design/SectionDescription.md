@@ -1,25 +1,7 @@
 # 3.2 - Simple Bandpass Filter Design
-## L-Point Averaging Filter
 
-The L-point averaging filter is a lowpass filter. Its passband width is controlled by `L`, being inversely proportional to `L`. You can use the GUI `dltidemo` to view the frequency response for different averagers and measure the passband widths.
-
-It is also possible to create a filter whose passband is centered around some frequency other than zero. One simple way to do this is to define the impulse response of an L-point FIR as:
-
-- [Graphs](<3.2 Simple Bandpass Filter Design/Graphs>)
-
-1. [Graphs](Breadcrumbs5530_6530_Project/3.2%20Simple%20Bandpass%20Filter%20Design/Graphs)- Link to Graphs file
-2. [HTML](Breadcrumbs5530_6530_Project/3.2%20Simple%20Bandpass%20Filter%20Design/two-HTML) - Link to HTML file
-3. [Matlab File](Breadcrumbs5530_6530_Project/3.2%20Simple%20Bandpass%20Filter%20Design/three-Matlab-File) - Link to Matlab file
-
-
-
-## Prompt for Lab 3.2
-
-
-## Figures
-
-![Figure](FigureLink)
-
-## Output Graphs
-
-![Graph](GraphLink)
+Simple Bandpass Filter in audio processing allows a specific range of frequencies to pass through while attenuating others.It's characterized by a center frequency and bandwidth.
+Graphical representations depict frequency response. It's crucial for shaping and manipulating audio signals in various applications.In our MATLAB-based experiment, we have observed that applying the filter results in a decrease or elimination of frequencies. However, the middle frequency is an exception and remains unaffected, while the others are either reduced or removed. The input and equation utilized in our experiment yield the following outcomes:
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/ddd5986d-9cee-478c-abbb-27149c1107f9)
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/22649eec-682b-49f4-a225-13c6180b5eb4)
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/7f713a64-c926-4091-ada0-a90e2caec718)
