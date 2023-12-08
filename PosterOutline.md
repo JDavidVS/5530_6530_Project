@@ -14,6 +14,7 @@ Our project explores various applications for Finite Impulse Response (FIR) filt
 ## Nulling Filters for Rejection (3.1)
 
 ## Simple Bandpass Filter Design (3.2)
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/0f675a11-cfaa-41a6-a791-05e5898206b2)
 
 ## Removing Interferance from a Speech Signal (2.3)
 - 3 structure figures
