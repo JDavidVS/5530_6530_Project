@@ -14,13 +14,13 @@ Our project explores various applications for Finite Impulse Response (FIR) filt
 ![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/e3ab55ef-c63c-46bb-bf77-764062de67a3)
 
 ## Simple Bandpass Filter Design (3.2)
-![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/0f675a11-cfaa-41a6-a791-05e5898206b2)
+![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/bf6c7961-b4d8-488d-898b-c1e3d4ce4b8b)
 
 ## Removing Interferance from a Speech Signal (2.3)
-- 3 structure figures
-- 3 graphs from matlab
 ![image](https://github.com/JDavidVS/5530_6530_Project/assets/148792714/3d221607-cd27-4592-8822-0bb847b56d38)
 
+- 3 structure figures
+- 3 graphs from matlab
 ## Summary/Conclusion
 
 In the realm of digital signal processing, digital frequency selective filters are designed to selectively pass or attenuate specific frequency components of a digital signal, allowing for precise control over the frequency response characteristics. FIR filters are characterized by their linear phase response, which means that they introduce a constant delay across all frequencies. This property is particularly advantageous in applications where preserving the phase relationship of the signal is crucial, such as in audio processing or telecommunications. FIR filters offer flexibility in designing the desired frequency response. By adjusting the filter coefficients, one can shape the filter's response to meet specific requirements. 
